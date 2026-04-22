@@ -1,0 +1,147 @@
+
+//INTERFAZ DE LA MATRIZ 
+librería que permite al Arduino controlar LEDs tipo WS2812B
+#ifndef MATRIX8X8_H
+#define MATRIX8X8_H
+
+#include <Adafruit_NeoPixel.h> //librería necesaria para poder prender la matriz 
+
+class Matrix8x8 {
+private:
+    Adafruit_NeoPixel leds;
+    int width;
+    int height;
+
+    int getIndex(int x, int y);
+
+public:
+    Matrix8x8(int pin, int w, int h);
+
+    void begin();
+    void clear();
+    void show();
+
+    void setPixel(int x, int y, uint8_t r, uint8_t g, uint8_t b);
+
+    // Señales
+    void digitalSignal(int delayTime);
+    void sweep(int delayTime);
+    void level(int value, int delayTime);
+};
+
+#endif
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//LOGICA 
+#include "Matrix8x8.h"
+
+Matrix8x8::Matrix8x8(int pin, int w, int h)
+: leds(w*h, pin, NEO_GRB + NEO_KHZ800) {
+    width = w;
+    height = h;
+}
+
+void Matrix8x8::begin() {
+    leds.begin();
+    leds.show();
+}
+
+void Matrix8x8::clear() {
+    leds.clear();
+}
+
+void Matrix8x8::show() {
+    leds.show();
+}
+
+
+int Matrix8x8::getIndex(int x, int y) {
+    if (y % 2 == 0) {
+        return y * width + x;
+    } else {
+        return y * width + (width - 1 - x);
+    }
+}
+
+void Matrix8x8::setPixel(int x, int y, uint8_t r, uint8_t g, uint8_t b) {
+    int index = getIndex(x, y);
+    leds.setPixelColor(index, leds.Color(r, g, b));
+}
+
+
+
+// ON/OFF
+void Matrix8x8::digitalSignal(int delayTime) {
+    for(int y=0; y<height; y++)
+        for(int x=0; x<width; x++)
+            setPixel(x,y,255,255,255);
+
+    show();
+    delay(delayTime);
+
+    clear();
+    show();
+    delay(delayTime);
+}
+
+// Barrido horizontal
+void Matrix8x8::sweep(int delayTime) {
+    for(int x=0; x<width; x++) {
+        clear();
+        for(int y=0; y<height; y++) {
+            setPixel(x,y,0,0,255);
+        }
+        show();
+        delay(delayTime);
+    }
+}
+
+// Nivel tipo barra
+void Matrix8x8::level(int value, int delayTime) {
+    clear();
+
+    int count = 0;
+
+    for(int y=0; y<height; y++) {
+        for(int x=0; x<width; x++) {
+            if(count < value) {
+                setPixel(x,y,0,255,0);
+                count++;
+            }
+        }
+    }
+
+    show();
+    delay(delayTime);
+}
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+//CONTROL 
+#include <Arduino.h>
+#include "Matrix8x8.h"
+
+#define PIN 6
+
+Matrix8x8 matrix(PIN, 8, 8);
+
+void setup() {
+    matrix.begin();
+}
+
+void loop() {
+
+    // Señal digital
+    for(int i=0; i<5; i++) {
+        matrix.digitalSignal(500);
+    }
+
+    // Barrido
+    matrix.sweep(100);
+
+    // Nivel
+    for(int i=0; i<=64; i++) {
+        matrix.level(i, 50);
+    }
+}
