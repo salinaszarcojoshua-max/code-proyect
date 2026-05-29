@@ -1,9 +1,20 @@
 #include "Snake.h"
+
 #include "../Matrix/Matrix.h"
+
+#define BTN_UP 2
+#define BTN_DOWN 3
+#define BTN_LEFT 4
+#define BTN_RIGHT 5
 
 void Snake::begin() {
 
-  longitud = 2;
+  pinMode(BTN_UP, INPUT_PULLUP);
+  pinMode(BTN_DOWN, INPUT_PULLUP);
+  pinMode(BTN_LEFT, INPUT_PULLUP);
+  pinMode(BTN_RIGHT, INPUT_PULLUP);
+
+  longitud = 3;
 
   snakeX[0] = 4;
   snakeY[0] = 4;
@@ -11,15 +22,44 @@ void Snake::begin() {
   snakeX[1] = 3;
   snakeY[1] = 4;
 
+  snakeX[2] = 2;
+  snakeY[2] = 4;
+
   direccionX = 1;
   direccionY = 0;
 
   generarComida();
+
+  ultimoMovimiento = millis();
 }
 
 void Snake::update() {
 
-  if(millis()-ultimoMovimiento > 400) {
+  if(!digitalRead(BTN_UP) && direccionY != 1){
+
+    direccionX = 0;
+    direccionY = -1;
+  }
+
+  if(!digitalRead(BTN_DOWN) && direccionY != -1){
+
+    direccionX = 0;
+    direccionY = 1;
+  }
+
+  if(!digitalRead(BTN_LEFT) && direccionX != 1){
+
+    direccionX = -1;
+    direccionY = 0;
+  }
+
+  if(!digitalRead(BTN_RIGHT) && direccionX != -1){
+
+    direccionX = 1;
+    direccionY = 0;
+  }
+
+  if(millis() - ultimoMovimiento > 300){
 
     mover();
 
@@ -31,7 +71,7 @@ void Snake::update() {
 
 void Snake::mover() {
 
-  for(int i=longitud;i>0;i--) {
+  for(int i = longitud; i > 0; i--){
 
     snakeX[i] = snakeX[i-1];
     snakeY[i] = snakeY[i-1];
@@ -46,10 +86,16 @@ void Snake::mover() {
   if(snakeY[0] > 7) snakeY[0] = 0;
   if(snakeY[0] < 0) snakeY[0] = 7;
 
+  if(colision()){
+
+    begin();
+    return;
+  }
+
   if(
     snakeX[0] == comidaX &&
     snakeY[0] == comidaY
-  ) {
+  ){
 
     longitud++;
 
@@ -61,7 +107,7 @@ void Snake::dibujar() {
 
   Matrix::clear();
 
-  for(int i=0;i<longitud;i++) {
+  for(int i=0;i<longitud;i++){
 
     Matrix::setLed(
       snakeX[i],
@@ -87,4 +133,20 @@ void Snake::generarComida() {
 
   comidaX = random(0,8);
   comidaY = random(0,8);
+}
+
+bool Snake::colision() {
+
+  for(int i=1;i<longitud;i++){
+
+    if(
+      snakeX[0] == snakeX[i] &&
+      snakeY[0] == snakeY[i]
+    ){
+
+      return true;
+    }
+  }
+
+  return false;
 }

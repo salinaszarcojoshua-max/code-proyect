@@ -1,36 +1,38 @@
 #ifndef Snake_h
 #define Snake_h
 
-#include "Arduino.h"
+#include <Arduino.h>
 
 class Snake {
 
-  public:
+public:
 
-    void begin();
+  void begin();
 
-    void update();
+  void update();
 
-  private:
+private:
 
-    int snakeX[16];
-    int snakeY[16];
+  int snakeX[64];
+  int snakeY[64];
 
-    int longitud;
+  int longitud;
 
-    int comidaX;
-    int comidaY;
+  int direccionX;
+  int direccionY;
 
-    int direccionX;
-    int direccionY;
+  int comidaX;
+  int comidaY;
 
-    unsigned long ultimoMovimiento;
+  unsigned long ultimoMovimiento;
 
-    void mover();
+  void mover();
 
-    void dibujar();
+  void dibujar();
 
-    void generarComida();
+  void generarComida();
+
+  bool colision();
 };
 
 #endif
