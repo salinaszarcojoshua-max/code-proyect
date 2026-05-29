@@ -78,8 +78,8 @@ void Effects::circular(float t) {
 
       float distancia =
       sqrt(
-        pow(i - 1.5,2) +
-        pow(j - 1.5,2)
+        pow(i - 3.5,2) +
+        pow(j - 3.5,2)
       );
 
       float brillo =

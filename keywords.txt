@@ -1,0 +1,20 @@
+NeoPixelEffects KEYWORD1
+Matrix  KEYWORD1
+Effects KEYWORD1
+Snake   KEYWORD1
+DAC KEYWORD1
+Color   KEYWORD1
+
+begin   KEYWORD2
+update  KEYWORD2
+clear   KEYWORD2
+setLed  KEYWORD2
+ondas   KEYWORD2
+arcoiris    KEYWORD2
+circular    KEYWORD2
+randomRGB   KEYWORD2
+enviar  KEYWORD2
+rgb KEYWORD2
+
+MATRIX_WIDTH    LITERAL1
+MATRIX_HEIGHT   LITERAL1

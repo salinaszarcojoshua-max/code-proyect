@@ -5,11 +5,11 @@ void Snake::begin() {
 
   longitud = 2;
 
-  snakeX[0] = 1;
-  snakeY[0] = 1;
+  snakeX[0] = 4;
+  snakeY[0] = 4;
 
-  snakeX[1] = 0;
-  snakeY[1] = 1;
+  snakeX[1] = 3;
+  snakeY[1] = 4;
 
   direccionX = 1;
   direccionY = 0;
@@ -40,11 +40,11 @@ void Snake::mover() {
   snakeX[0] += direccionX;
   snakeY[0] += direccionY;
 
-  if(snakeX[0] > 3) snakeX[0] = 0;
-  if(snakeX[0] < 0) snakeX[0] = 3;
+  if(snakeX[0] > 7) snakeX[0] = 0;
+  if(snakeX[0] < 0) snakeX[0] = 7;
 
-  if(snakeY[0] > 3) snakeY[0] = 0;
-  if(snakeY[0] < 0) snakeY[0] = 3;
+  if(snakeY[0] > 7) snakeY[0] = 0;
+  if(snakeY[0] < 0) snakeY[0] = 7;
 
   if(
     snakeX[0] == comidaX &&
@@ -85,6 +85,6 @@ void Snake::dibujar() {
 
 void Snake::generarComida() {
 
-  comidaX = random(0,4);
-  comidaY = random(0,4);
+  comidaX = random(0,8);
+  comidaY = random(0,8);
 }

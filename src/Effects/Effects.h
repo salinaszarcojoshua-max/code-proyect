@@ -17,7 +17,7 @@ class Effects {
 
   private:
 
-    static constexpr size_t N = 4;
+    static constexpr size_t N = 8;
 };
 
 #endif
