@@ -41,25 +41,25 @@ void Snake::update() {
     direccionY = -1;
   }
 
-  if(!digitalRead(BTN_DOWN) && direccionY != -1){
+  else if(!digitalRead(BTN_DOWN) && direccionY != -1){
 
     direccionX = 0;
     direccionY = 1;
   }
 
-  if(!digitalRead(BTN_LEFT) && direccionX != 1){
+  else if(!digitalRead(BTN_LEFT) && direccionX != 1){
 
     direccionX = -1;
     direccionY = 0;
   }
 
-  if(!digitalRead(BTN_RIGHT) && direccionX != -1){
+  else if(!digitalRead(BTN_RIGHT) && direccionX != -1){
 
     direccionX = 1;
     direccionY = 0;
   }
 
-  if(millis() - ultimoMovimiento > 300){
+  if(millis() - ultimoMovimiento > 400){
 
     mover();
 
@@ -107,7 +107,7 @@ void Snake::dibujar() {
 
   Matrix::clear();
 
-  for(int i=0;i<longitud;i++){
+  for(int i = 0; i < longitud; i++){
 
     Matrix::setLed(
       snakeX[i],
@@ -137,7 +137,7 @@ void Snake::generarComida() {
 
 bool Snake::colision() {
 
-  for(int i=1;i<longitud;i++){
+  for(int i = 1; i < longitud; i++){
 
     if(
       snakeX[0] == snakeX[i] &&
