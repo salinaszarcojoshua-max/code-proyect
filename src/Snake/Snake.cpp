@@ -71,12 +71,6 @@ void Snake::update() {
 
 void Snake::mover() {
 
-  for(int i = longitud; i > 0; i--){
-
-    snakeX[i] = snakeX[i-1];
-    snakeY[i] = snakeY[i-1];
-  }
-
   snakeX[0] += direccionX;
   snakeY[0] += direccionY;
 
@@ -86,23 +80,27 @@ void Snake::mover() {
   if(snakeY[0] > 7) snakeY[0] = 0;
   if(snakeY[0] < 0) snakeY[0] = 7;
 
-  if(colision()){
+  for(int i = 1; i < longitud; i++){
 
-    begin();
-    return;
+    snakeX[i] = snakeX[0] - (direccionX * i);
+    snakeY[i] = snakeY[0] - (direccionY * i);
+
+    if(snakeX[i] > 7) snakeX[i] -= 8;
+    if(snakeX[i] < 0) snakeX[i] += 8;
+
+    if(snakeY[i] > 7) snakeY[i] -= 8;
+    if(snakeY[i] < 0) snakeY[i] += 8;
   }
 
   if(
     snakeX[0] == comidaX &&
     snakeY[0] == comidaY
   ){
-
     longitud++;
 
     generarComida();
   }
 }
-
 void Snake::dibujar() {
 
   Matrix::clear();
