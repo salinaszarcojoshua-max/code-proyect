@@ -155,7 +155,26 @@ bool Snake::colision() {
 
 void Snake::generarComida() {
 
-  comidaX = random(0,8);
-  comidaY = random(0,8);
+  bool posicionValida = false;
+
+  while(!posicionValida) {
+
+    posicionValida = true;
+
+    comidaX = random(0,8);
+    comidaY = random(0,8);
+
+    for(int i = 0; i < longitud; i++) {
+
+      if(
+        comidaX == snakeX[i] &&
+        comidaY == snakeY[i]
+      ) {
+
+        posicionValida = false;
+        break;
+      }
+    }
+  }
 }
 
