@@ -1,6 +1,15 @@
 # NeoPixelEffects
 
-Libreria modular para matrices NeoPixel 4x4.
+Libreria modular para matrices NeoPixel RGB 8x8 desarrollada mediante Programación Orientada a Objetos para Arduino.
+
+Incluye:
+
+- Control de matriz RGB
+- Efectos visuales
+- Juego Snake
+- Comunicación DAC por I2C
+- Utilidades RGB
+- Arquitectura modular reutilizable
 
 ## Caracteristicas
 
@@ -10,7 +19,7 @@ Libreria modular para matrices NeoPixel 4x4.
 - DAC por I2C
 - Control de matriz
 - Utilidades RGB
-- Compatible con Arduino y ESP32
+- Compatible con Arduino Uno, Nano y plataformas compatibles
 
 ---
 
@@ -56,7 +65,7 @@ Funciones:
 
 ## Snake
 
-Juego Snake para matriz 4x4.
+Juego Snake para matriz 8x8 con control mediante botones físicos.
 
 Funciones:
 
